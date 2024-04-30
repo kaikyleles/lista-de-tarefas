@@ -13,8 +13,16 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-            },
+                interRegular: ['Inter-Regular', 'sans-serif'],
+                interMedium: ['Inter-Medium', 'sans-serif'],
+                interSemiBold: ['Inter-SemiBold', 'sans-serif'],
+                interBold: ['Inter-Bold', 'sans-serif'],
+                interExtraBold: ['Inter-ExtraBold', 'sans-serif'],
+                montserratRegular: ['Montserrat-Regular', 'sans-serif'],
+                montserratMedium: ['Montserrat-Medium', 'sans-serif'],
+                montserratSemiBold: ['Montserrat-SemiBold', 'sans-serif'],
+                montserratBold: ['Montserrat-Bold', 'sans-serif'],
+              }
         },
     },
 
