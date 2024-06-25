@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+    faUser,
     faChartSimple,
     faGear,
     faHouse,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Menu = ({ user }) => {
+const Menu = ({ user, setStep, currentStep }) => {
     return (
         <>
             <div
@@ -16,7 +17,13 @@ const Menu = ({ user }) => {
                     <h1 className="font-bold text-center">LOGO</h1>
                 </div>
                 <div className="flex flex-1 items-center gap-1 flex-row">
-                    <div className="p-7 bg-gray-500 rounded-full mx-8"></div>
+                    <div className="p-4 bg-gray-500 rounded-full mx-8">
+                    <FontAwesomeIcon
+                            icon={faUser}
+                            color="#FFFF"
+                            style={{ width: 25, height: 25 }}
+                        />
+                    </div>
                     <div>
                         <h4 className="font-interRegular">Bem vindo,</h4>
                         <h3 className="font-interBold text-xl">{user.name}</h3>
@@ -31,31 +38,28 @@ const Menu = ({ user }) => {
                     </h1>
                 </div>
                 <section>
-                    <div className="flex flex-1 items-center gap-5 flex-row mt-12 p-10 ">
-                        <FontAwesomeIcon
-                            icon={faHouse}
-                            color="#327835"
-                            style={{ width: 25, height: 25 }}
-                        />
-                        <h1 className="text-lg">Início</h1>
-                    </div>
-                    <div className="flex flex-1 items-center gap-5 flex-row px-10 ">
-                        <FontAwesomeIcon
-                            icon={faChartSimple}
-                            color="#327835"
-                            style={{ width: 25, height: 25 }}
-                        />
-                        <h1 className="text-lg">Estatísticas</h1>
-                    </div>
-                    <div className="flex flex-1 items-center gap-5 flex-row p-10 ">
-                        <FontAwesomeIcon
-                            icon={faGear}
-                            color="#327835"
-                            style={{ width: 25, height: 25 }}
-                        />
-                        <h1 className="text-lg">Opções</h1>
-                    </div>
-                </section>
+                <div
+                    className={`cursor-pointer flex flex-1 items-center gap-5 flex-row mt-12 px-7 py-4 mx-4 my-2 rounded-xl ${currentStep === 1 ? 'bg-green-600 text-white' : ''}`}
+                    onClick={() => setStep(1)}
+                >
+                    <FontAwesomeIcon icon={faHouse} color="#327835" style={{ width: 25, height: 25 }} />
+                    <h1 className="text-lg">Início</h1>
+                </div>
+                <div
+                    className={`cursor-pointer flex flex-1 items-center gap-5 flex-row px-7 py-4 mx-4 my-2 rounded-xl ${currentStep === 2 ? 'bg-green-600 text-white' : ''}`}
+                    onClick={() => setStep(2)}
+                >
+                    <FontAwesomeIcon icon={faChartSimple} color="#327835" style={{ width: 25, height: 25 }} />
+                    <h1 className="text-lg">Estatísticas</h1>
+                </div>
+                <div
+                    className={`cursor-pointer flex flex-1 items-center gap-5 flex-row px-7 py-4 mx-4 my-2 rounded-xl ${currentStep === 3 ? 'bg-green-600 text-white' : ''}`}
+                    onClick={() => setStep(3)}
+                >
+                    <FontAwesomeIcon icon={faGear} color="#327835" style={{ width: 25, height: 25 }} />
+                    <h1 className="text-lg">Opções</h1>
+                </div>
+            </section>
             </div>
         </>
     );
