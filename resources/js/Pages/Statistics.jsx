@@ -5,6 +5,7 @@ import {
     faGear,
     faHouse,
 } from "@fortawesome/free-solid-svg-icons";
+import ProgressBar from "@ramonak/react-progress-bar";
 
 export default function Statistics({ user }) {
     return (
@@ -16,7 +17,7 @@ export default function Statistics({ user }) {
                         color="#327835"
                         style={{ width: 35, height: 35 }}
                     />
-                    <h1 className="text-4xl font-bold">Estatísticas</h1>
+                    <h1 className="text-4xl font-bold" style={{color: '#327835'}}>Estatísticas</h1>
                 </div>
                 <div className="h-full">
                     <div className="flex flex-wrap p-4 gap-4">
@@ -41,10 +42,20 @@ export default function Statistics({ user }) {
                             </div>
                         </div>
                         <div
-                            className="flex-1 p-8 bg-white rounded-xl"
+                            className="flex flex-1 p-8 bg-white rounded-xl gap-3 align-center"
                             style={{height: "230px" }}
                         >
-                            Terceiro
+                            <div className="flex flex-col align-items justify-center items-center" style={{width: '40%'}}>
+                                <h3 className="font-interMedium text-xl">Seu <a className="font-interBold">nível</a></h3>
+                                <div className="flex items-center gap-1">
+                                    <h5 className="font-interExtraBold text-5xl text-green-600">02</h5>
+                                </div>
+                            </div>
+                            <div className="flex flex-col justify-center w-full gap-2">
+                                <h3 className="font-interMedium text-xl">Seu progresso</h3>
+                                <h4 className="font-interBold text-xl text-green-600">80%</h4>
+                                <ProgressBar completed={60} bgColor="#327835" height="40px" isLabelVisible={false}/>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -14,6 +14,7 @@
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/inertia-react": "^0.8.1",
         "@inertiajs/progress": "^0.2.7",
+        "@ramonak/react-progress-bar": "^5.2.0",
         "font-awesome": "^4.7.0",
         "formik": "^2.4.6",
         "react": "^18.2.0",

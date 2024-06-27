@@ -1,6 +1,7 @@
 import Menu from "./Menu";
 import Home from "./Home"
 import Statistics from "./Statistics"
+import Options from "./Options"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faChartSimple,
@@ -22,7 +23,7 @@ export default function Dashboard({ auth }) {
             case 2:
                 return <Statistics user={user} />;
             case 3:
-                //return <Settings user={user} />;
+                return <Options user={user} />;
         }
     };
 
