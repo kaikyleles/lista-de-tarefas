@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelope, faLock, faUser} from "@fortawesome/free-solid-svg-icons";
 import backgroundImage from "../../../assets/Design sem nome.png";
+import { Inertia } from '@inertiajs/inertia';
 
 export default function Register() {
     const [isDesktop, setIsDesktop] = useState(false);
@@ -19,21 +20,37 @@ export default function Register() {
 
     const formik = useFormik({
         initialValues: {
-            username: '',
+            name: '',
             email: '',
             password: '',
+            password_confirmation: '', // Novo campo para confirmar a senha
         },
         validationSchema: Yup.object().shape({
-            username: Yup.string()
+            name: Yup.string()
                 .required('O nome é obrigatório'),
             email: Yup.string()
                 .email("O e-mail deve ser válido")
                 .required('O e-mail é obrigatório'),
             password: Yup.string().required('A senha é obrigatória').min(6, "Mínimo de 6 caracteres"),
+            password_confirmation: Yup.string()
+                .oneOf([Yup.ref('password'), null], 'As senhas devem ser iguais') // Confirmação de senha igual à senha
+                .required('A confirmação de senha é obrigatória'),
         }),
-        onSubmit: values => {
+        onSubmit: (values) => {
+            register(values);
         },
     });
+
+    const register = async (values) => {
+        Inertia.post('/register', values, {
+            onSuccess: () => {
+                console.log('Register bem sucedido!');
+            },
+            onError: (errors) => {
+                console.error('Erro no login:', errors);
+            },
+        });
+    };
 
     return (
         <>
@@ -58,13 +75,13 @@ export default function Register() {
                                 type={"text"}
                                 placeholder={'Digite seu nome completo'}
                                 className='border-green-700 border-2 text-sm px-8 py-2 rounded-xl'
-                                name="username"
-                                value={formik.values.userName}
+                                name="name"
+                                value={formik.values.name}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                             />
-                            {formik.touched.username && formik.errors.username ? (
-                                <div className="text-red-600 text-xs">{formik.errors.username}</div>
+                            {formik.touched.name && formik.errors.name ? (
+                                <div className="text-red-600 text-xs">{formik.errors.name}</div>
                             ) : null}
                         </div>
                         <div className='flex flex-col gap-2'>
@@ -103,6 +120,26 @@ export default function Register() {
                                 <div className="text-red-600 text-xs">{formik.errors.password}</div>
                             ) : null}
                         </div>
+                        
+                        <div className='flex flex-col gap-2'>
+                            <label className='flex items-center font-montserratMedium text-xs gap-4 text-green-700'>
+                                <FontAwesomeIcon icon={faLock}/>
+                                Confirmar Senha
+                            </label>
+                            <input
+                                type={"password"}
+                                placeholder={'Confirme sua senha'}
+                                className='border-green-700 border-2 px-8 py-2 text-sm rounded-xl'
+                                name="password_confirmation"
+                                value={formik.values.password_confirmation}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                            />
+                            {formik.touched.password_confirmation && formik.errors.password_confirmation ? (
+                                <div className="text-red-600 text-xs">{formik.errors.password_confirmation}</div>
+                            ) : null}
+                        </div>
+
                         <div className='mt-5'>
                             <button
                                 type="submit"

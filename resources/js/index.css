@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Adicionando estilos personalizados */
+.custom-checkbox:checked {
+  @apply border-green-500 bg-green-500;
+}
+.custom-checkbox {
+  @apply border-4 border-green-500 bg-[#F9F9F9];
+}
