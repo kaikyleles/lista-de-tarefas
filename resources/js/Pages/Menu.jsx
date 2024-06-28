@@ -14,7 +14,7 @@ const Menu = ({ user, level, setStep, currentStep }) => {
                 className="bg-white w-80 mx-5 mt-5 mb-5 rounded-3xl shadow-lg"
                 style={{ height: `calc(100vh - 40px)` }}
             >
-                <div className="pt-20 pb-16 text-3xl">
+                <div className="pt-12 pb-12 text-3xl">
                     <h1 className="font-bold text-center">LOGO</h1>
                 </div>
                 <div className="flex flex-1 items-center gap-1 flex-row">

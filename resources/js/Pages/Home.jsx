@@ -76,7 +76,7 @@ const Home = ({ user }) => {
                 </div>
                 <div className="h-full">
                     <div className="flex flex-1 flex-col h-1/2">
-                        <div className="flex flex-row items-center gap-4 py-3 px-5">
+                        <div className="flex flex-col w-1/2 gap-4 py-3 px-5">
                             {tasks.map((task, index) => (
                                 <Tarefa 
                                     key={index} 

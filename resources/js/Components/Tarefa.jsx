@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Tarefa = ({ id, name, completed, onDelete, onToggleComplete }) => {
     const [isProcessing, setIsProcessing] = useState(false);
@@ -78,21 +80,25 @@ const Tarefa = ({ id, name, completed, onDelete, onToggleComplete }) => {
 
     return (
         <div className="bg-gray-200 p-4 rounded-lg shadow-md flex justify-between items-center">
-            <div className="flex items-center">
+            <div className="flex flex-row items-center">
                 <input 
                     type="checkbox" 
                     checked={isChecked} 
                     onChange={handleToggleComplete} 
                     disabled={isProcessing}
                 />
-                <h3 className={`text-xl font-bold ml-2 ${isChecked ? 'line-through' : ''}`}>{name}</h3>
+                <h3 className={`text-sm font-interMedium ml-2 ${isChecked ? 'line-through' : ''}`}>{name}</h3>
             </div>
             <button 
                 onClick={handleDelete} 
                 className="bg-red-500 text-white px-2 py-1 rounded"
                 disabled={isProcessing}
             >
-                Excluir
+                <FontAwesomeIcon
+                        icon={faTrash}
+                        color="white"
+                        style={{ width: 14, height: 14 }}
+                    />
             </button>
         </div>
     );

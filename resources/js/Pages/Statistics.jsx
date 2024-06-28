@@ -48,7 +48,7 @@ export default function Statistics({ user, level, setLevel }) {
 
     return (
         <div className="flex-1 px-2 py-5">
-            <div className="flex flex-row items-center gap-4 pt-20 pb-12 px-5">
+            <div className="flex flex-row items-center gap-4 pt-16 pb-4 px-5">
                 <FontAwesomeIcon
                     icon={faChartSimple}
                     color="#327835"
@@ -65,7 +65,7 @@ export default function Statistics({ user, level, setLevel }) {
                 <div className="flex flex-wrap p-4 gap-4">
                     <div
                         className="flex flex-col items-center justify-center p-8 bg-white gap-2 rounded-xl"
-                        style={{ width: "60%", height: "230px" }}
+                        style={{ width: "60%", height: "160px" }}
                     >
                         <h3 className="font-interMedium text-xl">
                             Tarefas Concluídas
@@ -81,7 +81,7 @@ export default function Statistics({ user, level, setLevel }) {
                     </div>
                     <div
                         className="flex flex-col items-center justify-center p-8 bg-white gap-2 rounded-xl"
-                        style={{ width: "38%", height: "230px" }}
+                        style={{ width: "38%", height: "160px" }}
                     >
                         <h3 className="font-interMedium text-xl">
                             Sugestões <br></br>
@@ -98,11 +98,11 @@ export default function Statistics({ user, level, setLevel }) {
                     </div>
                     <div
                         className="flex p-8 bg-white rounded-xl gap-3 align-center"
-                        style={{ height: "230px", width: "100%" }}
+                        style={{ height: "180px", width: "100%" }}
                     >
                         <div
-                            className="flex flex-col align-items justify-center items-center"
-                            style={{ width: "40%" }}
+                            className="flex flex-col items-center justify-center p-8 bg-white gap-2 rounded-xl"
+                            style={{ width: "60%" }}
                         >
                             <h3 className="font-interMedium text-xl">
                                 Seu <a className="font-interBold">nível</a>
@@ -113,7 +113,10 @@ export default function Statistics({ user, level, setLevel }) {
                                 </h5>
                             </div>
                         </div>
-                        <div className="flex flex-col justify-center w-full gap-2">
+                        <div
+                            className="flex flex-col items-center justify-center p-8 bg-white gap-2 rounded-xl"
+                            style={{ width: "100%" }}
+                        >
                             <h3 className="font-interMedium text-xl">
                                 Seu progresso
                             </h3>
@@ -129,12 +132,12 @@ export default function Statistics({ user, level, setLevel }) {
                         </div>
                     </div>
                     <div
-                        className="flex p-8 bg-white rounded-xl gap-3 align-center"
-                        style={{ height: "230px", width: "100%" }}
+                        className="flex p-8 bg-white rounded-xl gap-3 align-center justify-center"
+                        style={{ height: "215px", width: "100%" }}
                     >
                         <div
-                            className="flex align-items justify-center items-center gap-2"
-                            style={{ width: "40%" }}
+                            className="flex p-8 bg-white rounded-xl gap-3 align-center"
+                            style={{ width: "100%" }}
                         >
                             <FontAwesomeIcon
                                 icon={faClock}
@@ -154,6 +157,7 @@ export default function Statistics({ user, level, setLevel }) {
                                     {task.completed ? <FontAwesomeIcon
                                         icon={faCheck}
                                         color="#327835"
+                                        className='mt-1'
                                         style={{ width: 15, height: 15 }}
                                     /> : null}
                                 </div>
