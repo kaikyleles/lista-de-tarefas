@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faUser,
@@ -10,16 +12,18 @@ import {
 import ProgressBar from "@ramonak/react-progress-bar";
 
 export default function Statistics({ user }) {
-    const tasks = [
-        {name: 'Teste', completed: false},
-        {name: 'Teste2', completed: false},
-        {name: 'Teste3', completed: true},
-        {name: 'Teste4', completed: true},
-        {name: 'Teste5', completed: false},
-        {name: 'Teste5', completed: false},
-        {name: 'Teste5', completed: false},
-        {name: 'Teste5', completed: false},
-    ];
+    const [tasks, setTasks] = useState([]);
+
+    useEffect(() => {
+        axios.get('/api/profile/tasks')
+            .then(response => {
+                setTasks(response.data);
+            })
+            .catch(error => {
+                console.error('There was an error fetching the tasks!', error);
+            });
+    }, []);
+
     return (
         <>
             <div className="flex-1 px-2 py-5">
@@ -121,9 +125,9 @@ export default function Statistics({ user }) {
                                 </h3>
                             </div>
                             <div className="flex flex-col w-full gap-2" style={{maxHeight: '200px', overflowY: 'scroll'}}>
-                                {tasks && tasks.map(task => {
+                                {tasks && tasks.map((task, index) => {
                                     return (
-                                        <div className="flex flex-row align-center gap-5">
+                                        <div className="flex flex-row align-center gap-5" key={index}>
                                             <h3 className="font-interMedium text-lg">
                                                 - {task.name}
                                             </h3>
