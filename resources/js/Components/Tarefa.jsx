@@ -1,89 +1,101 @@
-import React, { useState, useRef, useEffect } from 'react';
+// resources/js/Components/Tarefa.jsx
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const Tarefa = () => {
-  const [tasks, setTasks] = useState([{ text: 'Teste', completed: false }, { text: 'Testando', completed: false }]);
-  const [newTask, setNewTask] = useState('');
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [editingText, setEditingText] = useState('');
-  const inputRef = useRef(null);
+const Tarefa = ({ id, name, completed, onDelete, onToggleComplete }) => {
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [isChecked, setIsChecked] = useState(completed);
 
-  const handleAddTask = () => {
-    if (newTask.trim()) {
-      setTasks([...tasks, { text: newTask, completed: false }]);
-      setNewTask('');
-    }
-  };
+    useEffect(() => {
+        setIsChecked(completed);
+    }, [completed]);
 
-  const handleInputChange = (e) => {
-    setNewTask(e.target.value);
-  };
+    const handleDelete = async (e) => {
+        e.stopPropagation();
+        if (isProcessing) return;
 
-  const handleCheckboxChange = (index) => {
-    const updatedTasks = tasks.map((task, i) =>
-      i === index ? { ...task, completed: !task.completed } : task
-    );
-    setTasks(updatedTasks);
-  };
+        setIsProcessing(true);
+        try {
+            const response = await axios.delete(`http://localhost:8000/api/tarefas/${id}`);
+            if (response.status === 204) {
+                toast.success("Tarefa excluída com sucesso!", {
+                    autoClose: 2000,
+                });
+                onDelete(id);
+            }
+        } catch (error) {
+            toast.error("Erro ao excluir tarefa!", {
+                autoClose: 2000,
+            });
+        } finally {
+            setIsProcessing(false);
+        }
+    };
 
-  const handleEditClick = (index, text) => {
-    setEditingIndex(index);
-    setEditingText(text);
-  };
+    const handleToggleComplete = async (e) => {
+        e.stopPropagation();
+        if (isProcessing) return;
 
-  const handleEditChange = (e) => {
-    setEditingText(e.target.value);
-  };
-
-  const handleEditSubmit = (index) => {
-    const updatedTasks = tasks.map((task, i) =>
-      i === index ? { ...task, text: editingText } : task
-    );
-    setTasks(updatedTasks);
-    setEditingIndex(null);
-  };
-
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [tasks]);
-
-  return (
-    <div>
-      <ul className=" mt-5 list-none space-y-2">
-        {tasks.map((task, index) => (
-          <li key={index} className="flex items-center">
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => handleCheckboxChange(index)}
-              className="form-checkbox h-5 w-5 text-green-500 rounded"
-            />
-            {editingIndex === index ? (
-              <input
-              type="text"
-              value={editingText}
-              onChange={handleEditChange}
-              onKeyPress={(e) => {
-                if (e.key === 'Enter') {
-                  handleEditSubmit(index);
+        setIsProcessing(true);
+        try {
+            if (isChecked) {
+                const response = await axios.post(`http://localhost:8000/api/tarefas/${id}/undo-complete`);
+                if (response.status === 200) {
+                    setIsChecked(false);
+                    toast.success("Tarefa marcada como não concluída!", {
+                        autoClose: 2000,
+                    });
+                    onToggleComplete(id, false);
+                } else {
+                    toast.error("Erro ao marcar tarefa como não concluída!", {
+                        autoClose: 2000,
+                    });
                 }
-              }}
-              className="form-input ml-2 block w-full rounded bg-transparent focus:bg-transparent focus:border-transparent focus:ring-0 font-interMedium"
-            />
-            ) : (
-              <span
-                className={`ml-2 ${task.completed ? 'line-through text-gray-500' : 'text-gray-700'}`}
-                onClick={() => handleEditClick(index, task.text)}
-              >
-                {task.text}
-              </span>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+            } else {
+                const response = await axios.post(`http://localhost:8000/api/tarefas/${id}/complete`);
+                if (response.status === 200) {
+                    setIsChecked(true);
+                    toast.success("Tarefa marcada como concluída!", {
+                        autoClose: 2000,
+                    });
+                    onToggleComplete(id, true);
+                } else {
+                    toast.error("Erro ao marcar tarefa como concluída!", {
+                        autoClose: 2000,
+                    });
+                }
+            }
+        } catch (error) {
+            toast.error("Erro ao marcar tarefa!", {
+                autoClose: 2000,
+            });
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
+    return (
+        <div className="bg-gray-200 p-4 rounded-lg shadow-md flex justify-between items-center">
+            <div className="flex items-center">
+                <input 
+                    type="checkbox" 
+                    checked={isChecked} 
+                    onChange={handleToggleComplete} 
+                    disabled={isProcessing}
+                />
+                <h3 className={`text-xl font-bold ml-2 ${isChecked ? 'line-through' : ''}`}>{name}</h3>
+            </div>
+            <button 
+                onClick={handleDelete} 
+                className="bg-red-500 text-white px-2 py-1 rounded"
+                disabled={isProcessing}
+            >
+                Excluir
+            </button>
+        </div>
+    );
 };
 
 export default Tarefa;

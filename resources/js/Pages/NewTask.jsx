@@ -6,12 +6,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
-const NewTask = ({ }) => {
+const NewTask = () => {
     const [taskName, setTaskName] = useState("");
     const suguestoes = ["Economizar", "Reciclar"];
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (taskName.trim() === "") {
             toast.error("Tarefa não pode ser vazia!", {
@@ -19,15 +20,26 @@ const NewTask = ({ }) => {
             });
             return;
         }
-        save(taskName);
+        save(taskName, false);
         setTaskName("");
     };
 
-    const save = (taskName) => {
-        toast.success("Tarefa adicionada com sucesso!", {
-            autoClose: 2000,
-        });
+    const save = async (taskName, isSuggestion = false) => {
+        try {
+            const response = await axios.post('http://localhost:8000/api/tarefas', {
+                name: taskName,
+                is_suggestion: isSuggestion,
+            });
+            toast.success("Tarefa adicionada com sucesso!", {
+                autoClose: 2000,
+            });
+        } catch (error) {
+            toast.error("Erro ao adicionar tarefa!", {
+                autoClose: 2000,
+            });
+        }
     };
+
     return (
         <>
             <div className="flex-1 px-2 py-5">
@@ -94,24 +106,22 @@ const NewTask = ({ }) => {
                                     </h2>
                                 </div>
                                 {suguestoes &&
-                                    suguestoes.map((s) => {
-                                        return (
-                                            <div
-                                                key={s}
-                                                className="flex flex-row items-center gap-4 py-3 px-5 cursor-pointer hover:bg-gray-100 w-48 rounded-xl"
-                                                onClick={() => save(s)}
-                                            >
-                                                <FontAwesomeIcon
-                                                    icon={faPlus}
-                                                    style={{
-                                                        width: 17,
-                                                        height: 17,
-                                                    }}
-                                                />
-                                                <label className="cursor-pointer">{s}</label>
-                                            </div>
-                                        );
-                                    })}
+                                    suguestoes.map((s) => (
+                                        <div
+                                            key={s}
+                                            className="flex flex-row items-center gap-4 py-3 px-5 cursor-pointer hover:bg-gray-100 w-48 rounded-xl"
+                                            onClick={() => save(s, true)}
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={faPlus}
+                                                style={{
+                                                    width: 17,
+                                                    height: 17,
+                                                }}
+                                            />
+                                            <label className="cursor-pointer">{s}</label>
+                                        </div>
+                                    ))}
                             </div>
                         </div>
                     </div>

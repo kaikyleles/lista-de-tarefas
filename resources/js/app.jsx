@@ -1,3 +1,4 @@
+// resources/js/app.jsx
 import './bootstrap';
 import '../css/app.css';
 
