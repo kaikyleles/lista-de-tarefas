@@ -11,18 +11,21 @@ import {
     faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import NewTask from "./NewTask";
 
 export default function Dashboard({ auth }) {
     const user = auth.user;
-    const [currentStep, setCurrentStep] = useState(1);
+    const [currentStep, setCurrentStep] = useState(2);
 
     const renderSteps = () => {
         switch (currentStep) {
             case 1:
-                return <Home user={user} />;
+                return <NewTask/>
             case 2:
-                return <Statistics user={user} />;
+                return <Home user={user} />;
             case 3:
+                return <Statistics user={user} />;
+            case 4:
                 return <Options user={user} />;
         }
     };

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 const Tarefa = () => {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([{ text: 'Teste', completed: false }, { text: 'Testando', completed: false }]);
   const [newTask, setNewTask] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingText, setEditingText] = useState('');
@@ -50,24 +50,6 @@ const Tarefa = () => {
 
   return (
     <div>
-      <div className="mt-4">
-        <input
-          ref={inputRef}
-          type="text"
-          value={newTask}
-          onChange={handleInputChange}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter' && newTask.trim()) {
-              handleAddTask();
-            }
-          }}
-          className="form-input mt-1 
-          block w-full rounded border-none bg-transparent focus:ring-gray-100 focus:ring-opacity-0
-          text-lg font-interBold
-          "
-          placeholder="+ Nova Tarefa"
-        />
-      </div>
       <ul className=" mt-5 list-none space-y-2">
         {tasks.map((task, index) => (
           <li key={index} className="flex items-center">

@@ -4,6 +4,7 @@ import {
     faChartSimple,
     faGear,
     faHouse,
+    faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Menu = ({ user, setStep, currentStep }) => {
@@ -39,24 +40,31 @@ const Menu = ({ user, setStep, currentStep }) => {
                 </div>
                 <section>
                 <div
-                    className={`cursor-pointer flex flex-1 items-center gap-5 flex-row mt-12 px-7 py-4 mx-4 my-2 rounded-xl ${currentStep === 1 ? 'bg-green-600 text-white' : ''}`}
+                    className={`cursor-pointer flex flex-1 items-center gap-5 flex-row mt-12 px-7 py-4 mx-4 my-2 rounded-xl hover:bg-gray-100`}
                     onClick={() => setStep(1)}
                 >
-                    <FontAwesomeIcon icon={faHouse} color={currentStep === 1 ? '#FFFF' : '#327835'} style={{ width: 25, height: 25 }} />
-                    <h1 className="text-lg">Início</h1>
+                    <FontAwesomeIcon icon={faPlus} color={'#327835'} style={{ width: 25, height: 25 }} />
+                    <h1 className="text-lg font-interBold" style={{color:'#327835'}}>Nova tarefa</h1>
                 </div>
                 <div
-                    className={`cursor-pointer flex flex-1 items-center gap-5 flex-row px-7 py-4 mx-4 my-2 rounded-xl ${currentStep === 2 ? 'bg-green-600 text-white' : ''}`}
+                    className={`cursor-pointer flex flex-1 items-center gap-5 flex-row mt-12 px-7 py-4 mx-4 my-2 rounded-xl ${currentStep === 2 ? 'bg-green-600 text-white' : ''}`}
                     onClick={() => setStep(2)}
                 >
-                    <FontAwesomeIcon icon={faChartSimple} color={currentStep === 2 ? '#FFFF' : '#327835'} style={{ width: 25, height: 25 }} />
-                    <h1 className="text-lg">Estatísticas</h1>
+                    <FontAwesomeIcon icon={faHouse} color={currentStep === 2 ? '#FFFF' : '#327835'} style={{ width: 25, height: 25 }} />
+                    <h1 className="text-lg">Início</h1>
                 </div>
                 <div
                     className={`cursor-pointer flex flex-1 items-center gap-5 flex-row px-7 py-4 mx-4 my-2 rounded-xl ${currentStep === 3 ? 'bg-green-600 text-white' : ''}`}
                     onClick={() => setStep(3)}
                 >
-                    <FontAwesomeIcon icon={faGear} color={currentStep === 3 ? '#FFFF' : '#327835'}  style={{ width: 25, height: 25 }} />
+                    <FontAwesomeIcon icon={faChartSimple} color={currentStep === 3 ? '#FFFF' : '#327835'} style={{ width: 25, height: 25 }} />
+                    <h1 className="text-lg">Estatísticas</h1>
+                </div>
+                <div
+                    className={`cursor-pointer flex flex-1 items-center gap-5 flex-row px-7 py-4 mx-4 my-2 rounded-xl ${currentStep === 4 ? 'bg-green-600 text-white' : ''}`}
+                    onClick={() => setStep(4)}
+                >
+                    <FontAwesomeIcon icon={faGear} color={currentStep === 4 ? '#FFFF' : '#327835'}  style={{ width: 25, height: 25 }} />
                     <h1 className="text-lg">Opções</h1>
                 </div>
             </section>
