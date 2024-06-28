@@ -17,7 +17,7 @@ export default function Statistics({ user, level, setLevel }) {
         completed_suggestions: 0,
         progress: 0,
     });
-    const [progressAchieved, setProgressAchieved] = useState(false); // Estado para verificar se já foi incrementado
+    const [progressAchieved, setProgressAchieved] = useState(false);
 
     useEffect(() => {
         axios.get('/api/statistics')
@@ -25,12 +25,10 @@ export default function Statistics({ user, level, setLevel }) {
                 const data = response.data;
                 setStatistics(data);
 
-                if (data.progress === 100 && !progressAchieved) {
+                // Aumentar o nível apenas na primeira vez que o progresso atingir 100%
+                if (data.progress === 100 && !progressAchieved && level === 1) {
                     setLevel(prevLevel => prevLevel + 1);
-                    setProgressAchieved(true); // Marcar que o progresso foi alcançado
-                } else if (data.progress < 100 && progressAchieved) {
-                    setLevel(prevLevel => Math.max(prevLevel - 1, 1)); // Diminuir o nível, garantindo que não caia abaixo de 1
-                    setProgressAchieved(false); // Resetar a verificação se o progresso cair abaixo de 100%
+                    setProgressAchieved(true);
                 }
             })
             .catch(error => {
@@ -44,7 +42,7 @@ export default function Statistics({ user, level, setLevel }) {
             .catch(error => {
                 console.error('There was an error fetching the tasks!', error);
             });
-    }, [statistics.progress]); // Adicionar statistics.progress como dependência para verificar mudanças no progresso
+    }, [statistics.progress, progressAchieved, level]); // Adicionar dependências adequadas
 
     return (
         <div className="flex-1 px-2 py-5">
